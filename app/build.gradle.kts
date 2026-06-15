@@ -1,5 +1,5 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.application)
@@ -10,24 +10,19 @@ plugins {
 }
 
 android {
-
     namespace = "com.aistudio.nexfilesx"
-
     compileSdk = 36
 
     defaultConfig {
         applicationId = "com.aistudio.nexfilesx.uqzrlp"
         minSdk = 24
         targetSdk = 36
-
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     signingConfigs {
-
         create("release") {
             val keystorePath = System.getenv("KEYSTORE_PATH")
                 ?: "${rootDir}/my-upload-key.jks"
@@ -47,7 +42,6 @@ android {
     }
 
     buildTypes {
-
         release {
             isMinifyEnabled = false
             isCrunchPngs = false
@@ -70,10 +64,6 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    kotlin {
-        jvmToolchain(17)
-    }
-
     buildFeatures {
         compose = true
         buildConfig = true
@@ -87,7 +77,16 @@ android {
 }
 
 /**
- * Secrets plugin config
+ * ✅ FIX: Kotlin 2.x / Gradle 9 compatible compiler config
+ */
+tasks.withType<KotlinCompile>().configureEach {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_17)
+    }
+}
+
+/**
+ * Secrets plugin
  */
 secrets {
     propertiesFileName = ".env"
@@ -132,7 +131,6 @@ dependencies {
 
     testImplementation(libs.junit)
     testImplementation(libs.androidx.junit)
-    testImplementation(libs.androidx.core)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.robolectric)
     testImplementation(libs.roborazzi)
@@ -147,4 +145,4 @@ dependencies {
 
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
-}}
+}
