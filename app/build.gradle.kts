@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
@@ -7,7 +9,7 @@ plugins {
 }
 
 android {
-    // ✅ REQUIRED in AGP 8+
+
     namespace = "com.aistudio.nexfilesx"
 
     compileSdk = 36
@@ -24,6 +26,7 @@ android {
     }
 
     signingConfigs {
+
         create("release") {
             val keystorePath = System.getenv("KEYSTORE_PATH")
                 ?: "${rootDir}/my-upload-key.jks"
@@ -43,6 +46,7 @@ android {
     }
 
     buildTypes {
+
         release {
             isMinifyEnabled = false
             isCrunchPngs = false
@@ -65,10 +69,6 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    kotlinOptions {
-        jvmTarget = "17"
-    }
-
     buildFeatures {
         compose = true
         buildConfig = true
@@ -82,7 +82,16 @@ android {
 }
 
 /**
- * Secrets Gradle Plugin config
+ * Kotlin compiler SAFE CONFIG (FIX for Codemagic + Gradle 9)
+ */
+tasks.withType<KotlinCompile>().configureEach {
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+}
+
+/**
+ * Secrets plugin config
  */
 secrets {
     propertiesFileName = ".env"
@@ -91,14 +100,15 @@ secrets {
 
 dependencies {
 
-    // Compose BOM
     implementation(platform(libs.androidx.compose.bom))
     implementation(platform(libs.firebase.bom))
 
     implementation(libs.androidx.activity.compose)
+
     implementation(libs.androidx.compose.material.icons.core)
     implementation(libs.androidx.compose.material.icons.extended)
     implementation(libs.androidx.compose.material3)
+
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
@@ -121,11 +131,9 @@ dependencies {
     implementation(libs.logging.interceptor)
     implementation(libs.moshi.kotlin)
 
-    // KSP (FIXED SYNTAX)
     ksp(libs.androidx.room.compiler)
     ksp(libs.moshi.kotlin.codegen)
 
-    // TESTS
     testImplementation(libs.junit)
     testImplementation(libs.androidx.junit)
     testImplementation(libs.androidx.core)
