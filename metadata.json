@@ -1,0 +1,6 @@
+{
+  "name": "NexFiles X",
+  "description": "Smart Offline File Manager & Storage Optimizer with a secure Privacy Vault, Duplicates Finder, Large Files Detector, APK Manager, and a rich, AMOLED-dark Glassmorphic UI.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
