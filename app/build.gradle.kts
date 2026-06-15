@@ -33,12 +33,7 @@ android {
             keyPassword = System.getenv("KEY_PASSWORD")
         }
 
-        create("debugConfig") {
-            storeFile = file("${rootDir}/debug.keystore")
-            storePassword = "android"
-            keyAlias = "androiddebugkey"
-            keyPassword = "android"
-        }
+        // ❌ debugConfig REMOVED (IMPORTANT FIX)
     }
 
     buildTypes {
@@ -55,7 +50,8 @@ android {
         }
 
         debug {
-            signingConfig = signingConfigs.getByName("debugConfig")
+            // ✅ Use default Android debug keystore (Codemagic SAFE)
+            isMinifyEnabled = false
         }
     }
 
@@ -77,7 +73,7 @@ android {
 }
 
 /**
- * ✅ FIX: Kotlin 2.x / Gradle 9 compatible compiler config
+ * Kotlin compiler (Gradle 9 + Kotlin 2 safe)
  */
 tasks.withType<KotlinCompile>().configureEach {
     compilerOptions {
