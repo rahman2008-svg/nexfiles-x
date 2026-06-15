@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -82,11 +83,11 @@ android {
 }
 
 /**
- * Kotlin compiler SAFE CONFIG (FIX for Codemagic + Gradle 9)
+ * ✅ NEW Kotlin Compiler DSL (FIX FOR GRADLE 9 + AGP 8)
  */
 tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions {
-        jvmTarget = "17"
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_17)
     }
 }
 
