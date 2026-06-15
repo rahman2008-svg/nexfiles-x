@@ -1,11 +1,11 @@
 workflows:
-  nexfilesx-android:
-    name: NexFiles X Android Build
+  nexfilesx-android-debug:
+    name: NexFiles X Debug Build
 
     max_build_duration: 60
 
     environment:
-      java: 21
+      java: 17
 
     cache:
       cache_paths:
@@ -13,7 +13,7 @@ workflows:
         - ~/.gradle/wrapper
 
     scripts:
-      - name: Grant execute permission
+      - name: Set permissions
         script: |
           chmod +x gradlew
 
@@ -26,7 +26,46 @@ workflows:
           ./gradlew assembleDebug --stacktrace
 
     artifacts:
-      - app/build/outputs/**/*.apk
+      - app/build/outputs/apk/debug/*.apk
+
+    publishing:
+      email:
+        recipients:
+          - prince.ar.abdur.rahman2008@gmail.com
+
+
+  nexfilesx-android-release:
+    name: NexFiles X Release Build
+
+    max_build_duration: 60
+
+    environment:
+      java: 17
+
+      groups:
+        - keystore_credentials
+
+    cache:
+      cache_paths:
+        - ~/.gradle/caches
+        - ~/.gradle/wrapper
+
+    scripts:
+      - name: Set permissions
+        script: |
+          chmod +x gradlew
+
+      - name: Clean project
+        script: |
+          ./gradlew clean
+
+      - name: Build Release APK
+        script: |
+          ./gradlew assembleRelease --stacktrace
+
+    artifacts:
+      - app/build/outputs/apk/release/*.apk
+      - app/build/outputs/bundle/release/*.aab
 
     publishing:
       email:
