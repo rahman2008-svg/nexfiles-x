@@ -70,6 +70,10 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
+    kotlin {
+        jvmToolchain(17)
+    }
+
     buildFeatures {
         compose = true
         buildConfig = true
@@ -79,15 +83,6 @@ android {
         unitTests {
             isIncludeAndroidResources = true
         }
-    }
-}
-
-/**
- * ✅ NEW Kotlin Compiler DSL (FIX FOR GRADLE 9 + AGP 8)
- */
-tasks.withType<KotlinCompile>().configureEach {
-    compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_17)
     }
 }
 
@@ -152,4 +147,4 @@ dependencies {
 
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
-}
+}}
