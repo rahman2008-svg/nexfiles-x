@@ -1,5 +1,5 @@
 workflows:
-  nexfilesx-android-debug:
+  nexfilesx-debug:
     name: NexFiles X Debug Build
 
     max_build_duration: 60
@@ -13,7 +13,7 @@ workflows:
         - ~/.gradle/wrapper
 
     scripts:
-      - name: Set permissions
+      - name: Grant permission
         script: |
           chmod +x gradlew
 
@@ -34,7 +34,7 @@ workflows:
           - prince.ar.abdur.rahman2008@gmail.com
 
 
-  nexfilesx-android-release:
+  nexfilesx-release:
     name: NexFiles X Release Build
 
     max_build_duration: 60
@@ -51,7 +51,7 @@ workflows:
         - ~/.gradle/wrapper
 
     scripts:
-      - name: Set permissions
+      - name: Grant permission
         script: |
           chmod +x gradlew
 
